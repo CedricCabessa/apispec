@@ -92,10 +92,6 @@ class TestMarshmallowFieldToOpenAPI:
 
 
 class TestMarshmallowSchemaToModelDefinition:
-    def test_invalid_schema(self, openapi):
-        with pytest.raises(ValueError):
-            openapi.schema2jsonschema(None)
-
     def test_schema2jsonschema_with_explicit_fields(self, openapi):
         class UserSchema(Schema):
             _id = fields.Int()
@@ -278,10 +274,6 @@ class TestMarshmallowSchemaToParameters:
         field = fields.Str(required=True, location="query")
         res = openapi.field2parameter(field, name="field", default_in=None)
         assert res["required"] is True
-
-    def test_invalid_schema(self, openapi):
-        with pytest.raises(ValueError):
-            openapi.schema2parameters(None)
 
     # json/body is invalid for OpenAPI 3
     @pytest.mark.parametrize("openapi", ("2.0",), indirect=True)
